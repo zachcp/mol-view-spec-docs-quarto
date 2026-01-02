@@ -9,7 +9,6 @@ This page demonstrates various MolViewSpec examples showcasing different visuali
 A simple molecular structure visualization. This example loads the 1cbs structure from the PDB and displays it as a blue cartoon representation.
 
 ```{.molviewspec}
-
 builder
     .download({ url: 'https://files.wwpdb.org/download/1cbs.cif' })
     .parse({ format: 'mmcif' })
@@ -66,7 +65,6 @@ structure
         ]
     })
     .focus();
-
 ```
 
 ## Label Example
@@ -78,6 +76,8 @@ const structure = builder
     .download({ url: 'https://files.wwpdb.org/download/1lap.cif' })
     .parse({ format: 'mmcif' })
     .modelStructure();
+
+---
 
 structure
     .component({ selector: 'all' })
@@ -91,7 +91,6 @@ structure
     .component({ selector: { label_asym_id: 'A', label_seq_id: 120 } })
     .label({ text: 'ALA 120 A: My Label' })
     .focus();
-
 ```
 
 ## Superposition Example
@@ -99,7 +98,6 @@ structure
 This example demonstrates structural superposition by loading two hemoglobin structures (4hhb in red and 1oj6 in blue) and applying a transformation matrix to align them.
 
 ```{.molviewspec}
-
 builder
     .download({ url: 'https://files.wwpdb.org/download/4hhb.cif' })
     .parse({ format: 'mmcif' })
@@ -123,7 +121,6 @@ builder
     .component({ selector: 'all' })
     .representation({ type: 'cartoon' })
     .color({ color: 'blue' });
-
 ```
 
 ## Symmetry Example
@@ -141,7 +138,6 @@ builder
     .component({ selector: 'all' })
     .representation({ type: 'cartoon' })
     .color({ color: '#008080' });
-
 ```
 
 ## Annotations Example
@@ -149,13 +145,14 @@ builder
 This example demonstrates using external annotation files to define components, colors, labels, and tooltips. It loads structure 1h9t (protein-DNA complex) and applies annotations from a CIF file.
 
 ```{.molviewspec}
-
 const annotationUri = 'https://molstar.org/mol-view-spec/examples/annotations/annotations-1h9t.cif';
 
 const structure = builder
     .download({ url: 'https://files.wwpdb.org/download/1h9t.cif' })
     .parse({ format: 'mmcif' })
     .modelStructure();
+
+---
 
 structure
     .componentFromUri({
@@ -217,7 +214,9 @@ structure
         field_name: 'label',
         block_header: '1h9t_annotations',
         schema: 'residue_range'
-    })
+    });
+
+structure
     .tooltipFromUri({
         uri: annotationUri,
         format: 'cif',
@@ -226,7 +225,6 @@ structure
         block_header: '1h9t_annotations',
         schema: 'residue_range'
     });
-
 ```
 
 ## Primitives Example
@@ -234,13 +232,13 @@ structure
 This example demonstrates geometric primitives without molecular structures. It includes ellipses, arrows, and an ellipsoid with different opacities.
 
 ```{.molviewspec}
-
 builder.canvas({ background_color: '#000000' });
 
-builder.primitives({ opacity: 0.66 });
+const prims1 = builder.primitives({ opacity: 0.66 });
 
-builder.primitive({
-    kind: 'ellipse',
+---
+
+prims1.ellipse({
     center: [1, 1, 1],
     major_axis: [1.5, 0, 0],
     minor_axis: [0, 2, 0],
@@ -250,8 +248,7 @@ builder.primitive({
     tooltip: 'XY'
 });
 
-builder.primitive({
-    kind: 'ellipse',
+prims1.ellipse({
     center: [1, 1, 1],
     major_axis_endpoint: [2.5, 1, 1],
     minor_axis_endpoint: [1, 1, 2],
@@ -261,8 +258,7 @@ builder.primitive({
     tooltip: 'XZ'
 });
 
-builder.primitive({
-    kind: 'ellipse',
+prims1.ellipse({
     center: [1, 1, 1],
     major_axis: [0, 10, 0],
     minor_axis: [0, 0, 1],
@@ -274,8 +270,7 @@ builder.primitive({
     tooltip: 'YZ'
 });
 
-builder.primitive({
-    kind: 'arrow',
+prims1.arrow({
     start: [1, 1, 1],
     end: [2.5, 1, 1],
     length: 1.7,
@@ -285,8 +280,7 @@ builder.primitive({
     tooltip: 'X'
 });
 
-builder.primitive({
-    kind: 'arrow',
+prims1.arrow({
     start: [1, 1, 1],
     direction: [0, 2.2, 0],
     show_end_cap: true,
@@ -295,8 +289,7 @@ builder.primitive({
     tooltip: 'Y'
 });
 
-builder.primitive({
-    kind: 'arrow',
+prims1.arrow({
     start: [1, 1, 2.2],
     end: [1, 1, 1],
     show_start_cap: true,
@@ -305,18 +298,15 @@ builder.primitive({
     tooltip: 'Z'
 });
 
-builder.primitives({ opacity: 0.33 });
+const prims2 = builder.primitives({ opacity: 0.33 });
 
-builder.primitive({
-    kind: 'ellipsoid',
+prims2.ellipsoid({
     center: [1, 1, 1],
     major_axis: [1, 0, 0],
     minor_axis: [0, 1, 0],
     radius: [1.5, 2, 1],
     color: '#cccccc'
 });
-
-
 ```
 
 ## Volumes Example
@@ -324,36 +314,38 @@ builder.primitive({
 This example demonstrates electron density map visualization. It loads structure 1tqn along with 2FO-FC and FO-FC electron density maps from the PDBe Volume Server.
 
 ```{.molviewspec}
-
-
-constr structure = builder
+const structure = builder
     .download({ url: 'https://files.wwpdb.org/download/1tqn.cif' })
     .parse({ format: 'mmcif' })
     .modelStructure();
 
-builder
-    .component({ selector: 'polymer' })
-    .representation({ type: 'cartoon' })
-    .color({ color: 'white' });
-
-builder
-    .component({ selector: 'ligand' })
-    .representation({ type: 'ball_and_stick' })
-    .color({ color: 'element-symbol' })
-    .focus({
-        direction: [-28.47, -17.66, -16.32],
-        up: [0.98, -0.19, 0],
-        radius: 14,
-        radius_extent: 5
-    });
-
-builder
+const volumeData = builder
     .download({
         url: 'https://www.ebi.ac.uk/pdbe/densities/x-ray/1tqn/box/-22.367,-33.367,-21.634/-7.106,-10.042,-0.937?detail=3'
     })
     .parse({ format: 'bcif' });
 
-builder
+---
+
+structure
+    .component({ selector: 'polymer' })
+    .representation({ type: 'cartoon' })
+    .color({ color: 'white' });
+
+const ligand = structure.component({ selector: 'ligand' });
+
+ligand
+    .representation({ type: 'ball_and_stick' })
+    .color({ color: 'element-symbol' });
+
+ligand.focus({
+    direction: [-28.47, -17.66, -16.32],
+    up: [0.98, -0.19, 0],
+    radius: 14,
+    radius_extent: 5
+});
+
+volumeData
     .volume({ channel_id: '2FO-FC' })
     .volumeRepresentation({
         type: 'isosurface',
@@ -364,8 +356,9 @@ builder
     .color({ color: 'blue' })
     .opacity({ opacity: 0.3 });
 
-builder
-    .volume({ channel_id: 'FO-FC' })
+const fofc = volumeData.volume({ channel_id: 'FO-FC' });
+
+fofc
     .volumeRepresentation({
         type: 'isosurface',
         relative_isovalue: 3,
@@ -374,7 +367,7 @@ builder
     .color({ color: 'green' })
     .opacity({ opacity: 0.3 });
 
-builder
+fofc
     .volumeRepresentation({
         type: 'isosurface',
         relative_isovalue: -3,
@@ -382,6 +375,4 @@ builder
     })
     .color({ color: 'red' })
     .opacity({ opacity: 0.3 });
-
-
 ```
