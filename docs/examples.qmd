@@ -47,14 +47,14 @@ structure
 structure
     .component({ selector: { label_asym_id: 'B', label_seq_id: 217 } })
     .representation({ type: 'ball_and_stick' })
-    .color({ color: '#ff0000' })
-    .label({ text: 'aaRS Class II Signature' });
+    .color({ color: '#ff0000' });
+    //.label({ text: 'aaRS Class II Signature' });
 
 structure
     .component({ selector: { label_asym_id: 'B', label_seq_id: 537 } })
     .representation({ type: 'ball_and_stick' })
-    .color({ color: '#ff0000' })
-    .label({ text: 'aaRS Class II Signature' });
+    .color({ color: '#ff0000' });
+    //.label({ text: 'aaRS Class II Signature' });
 
 structure
     .component({
@@ -65,6 +65,7 @@ structure
         ]
     })
     .focus();
+
 ```
 
 ## Label Example
@@ -319,31 +320,29 @@ const structure = builder
     .parse({ format: 'mmcif' })
     .modelStructure();
 
-const volumeData = builder
-    .download({
-        url: 'https://www.ebi.ac.uk/pdbe/densities/x-ray/1tqn/box/-22.367,-33.367,-21.634/-7.106,-10.042,-0.937?detail=3'
-    })
-    .parse({ format: 'bcif' });
-
----
-
 structure
     .component({ selector: 'polymer' })
     .representation({ type: 'cartoon' })
     .color({ color: 'white' });
 
-const ligand = structure.component({ selector: 'ligand' });
-
-ligand
+const ligand = structure
+    .component({ selector: 'ligand' })
     .representation({ type: 'ball_and_stick' })
     .color({ color: 'element-symbol' });
 
 ligand.focus({
-    direction: [-28.47, -17.66, -16.32],
-    up: [0.98, -0.19, 0],
-    radius: 14,
-    radius_extent: 5
-});
+        direction: [-28.47, -17.66, -16.32],
+        up: [0.98, -0.19, 0],
+        radius: 14,
+        radius_extent: 5
+    });
+
+
+const volumeData = builder
+    .download({
+        url: 'https://www.ebi.ac.uk/pdbe/densities/x-ray/1tqn/box/-22.367,-33.367,-21.634/-7.106,-10.042,-0.937?detail=3'
+    })
+    .parse({ format: 'bcif' });
 
 volumeData
     .volume({ channel_id: '2FO-FC' })
@@ -358,8 +357,8 @@ volumeData
 
 const fofc = volumeData.volume({ channel_id: 'FO-FC' });
 
-fofc
-    .volumeRepresentation({
+
+fofc.volumeRepresentation({
         type: 'isosurface',
         relative_isovalue: 3,
         show_wireframe: true
@@ -367,12 +366,12 @@ fofc
     .color({ color: 'green' })
     .opacity({ opacity: 0.3 });
 
-fofc
-    .volumeRepresentation({
+fofc.volumeRepresentation({
         type: 'isosurface',
         relative_isovalue: -3,
         show_wireframe: true
     })
     .color({ color: 'red' })
     .opacity({ opacity: 0.3 });
+
 ```
