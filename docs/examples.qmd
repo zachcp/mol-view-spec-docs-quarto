@@ -1,0 +1,364 @@
+---
+title: "Examples"
+---
+
+This page demonstrates various MolViewSpec examples showcasing different visualization capabilities using the builder API.
+
+## Basic Example
+
+A simple molecular structure visualization. This example loads the 1cbs structure from the PDB and displays it as a blue cartoon representation.
+
+```{.molviewspec}
+builder
+    .download({ url: 'https://files.wwpdb.org/download/1cbs.cif' })
+    .parse({ format: 'mmcif' })
+    .modelStructure()
+    .component({ selector: 'all' })
+    .representation({ type: 'cartoon' })
+    .color({ color: 'blue' });
+```
+
+## Components Example
+
+This example demonstrates multiple component selection with different representations. It shows an aminoacyl-tRNA synthetase (1c0a) with protein (orange), nucleic acid (blue), and specific residues highlighted in different colors. The example also demonstrates labels and focus functionality.
+
+```{.molviewspec}
+
+const structure = builder
+    .download({ url: 'https://files.wwpdb.org/download/1c0a.cif' })
+    .parse({ format: 'mmcif' })
+    .assemblyStructure();
+
+structure
+    .component({ selector: 'protein' })
+    .representation({ type: 'cartoon' })
+    .color({ color: '#e19039' });
+
+structure
+    .component({ selector: 'nucleic' })
+    .representation({ type: 'cartoon' })
+    .color({ color: '#4b7fcc' });
+
+structure
+    .component({ selector: { label_asym_id: 'E' } })
+    .representation({ type: 'ball_and_stick' })
+    .color({ color: '#229954' });
+
+const sel1 = structure
+    .component({ selector: { label_asym_id: 'B', label_seq_id: 217 } });
+
+sel1
+    .representation({ type: 'ball_and_stick' })
+    .color({ color: '#ff0000' });
+
+sel1.label({ text: 'aaRS Class II Signature' });
+
+
+const sel2 = structure
+    .component({ selector: { label_asym_id: 'B', label_seq_id: 537 } });
+
+sel2.representation({ type: 'ball_and_stick' })
+    .color({ color: '#ff0000' });
+
+sel2.label({ text: 'aaRS Class II Signature' });
+
+structure
+    .component({
+        selector: [
+            { label_asym_id: 'E' },
+            { label_asym_id: 'B', label_seq_id: 217 },
+            { label_asym_id: 'B', label_seq_id: 537 }
+        ]
+    })
+    .focus();
+
+```
+
+## Label Example
+
+This example demonstrates custom labeling on specific residues. It highlights residue ALA 120 A in red with a custom label and focuses the camera on it.
+
+```{.molviewspec}
+const structure = builder
+    .download({ url: 'https://files.wwpdb.org/download/1lap.cif' })
+    .parse({ format: 'mmcif' })
+    .modelStructure();
+
+---
+
+structure
+    .component({ selector: 'all' })
+    .representation({ type: 'cartoon' })
+    .color({
+        selector: { label_asym_id: 'A', label_seq_id: 120 },
+        color: 'red'
+    });
+
+structure
+    .component({ selector: { label_asym_id: 'A', label_seq_id: 120 } })
+    .label({ text: 'ALA 120 A: My Label' })
+    .focus();
+```
+
+## Superposition Example
+
+This example demonstrates structural superposition by loading two hemoglobin structures (4hhb in red and 1oj6 in blue) and applying a transformation matrix to align them.
+
+```{.molviewspec}
+builder
+    .download({ url: 'https://files.wwpdb.org/download/4hhb.cif' })
+    .parse({ format: 'mmcif' })
+    .modelStructure()
+    .component({ selector: 'all' })
+    .representation({ type: 'cartoon' })
+    .color({ color: 'red' });
+
+builder
+    .download({ url: 'https://files.wwpdb.org/download/1oj6.cif' })
+    .parse({ format: 'mmcif' })
+    .modelStructure()
+    .transform({
+        rotation: [
+            -0.7202161, -0.33009904, -0.61018308,
+            0.36257631, 0.57075962, -0.73673053,
+            0.59146191, -0.75184312, -0.29138417
+        ],
+        translation: [-12.54, 46.79, 94.5]
+    })
+    .component({ selector: 'all' })
+    .representation({ type: 'cartoon' })
+    .color({ color: 'blue' });
+```
+
+## Symmetry Example
+
+This example demonstrates crystal symmetry visualization by creating a 3x3x3 unit cell grid of structure 1tqn.
+
+```{.molviewspec}
+builder
+    .download({ url: 'https://files.wwpdb.org/download/1tqn.cif' })
+    .parse({ format: 'mmcif' })
+    .symmetryStructure({
+        ijk_min: [-1, -1, -1],
+        ijk_max: [1, 1, 1]
+    })
+    .component({ selector: 'all' })
+    .representation({ type: 'cartoon' })
+    .color({ color: '#008080' });
+```
+
+## Annotations Example
+
+This example demonstrates using external annotation files to define components, colors, labels, and tooltips. It loads structure 1h9t (protein-DNA complex) and applies annotations from a CIF file.
+
+```{.molviewspec}
+const annotationUri = 'https://molstar.org/mol-view-spec/examples/annotations/annotations-1h9t.cif';
+
+const structure = builder
+    .download({ url: 'https://files.wwpdb.org/download/1h9t.cif' })
+    .parse({ format: 'mmcif' })
+    .modelStructure();
+
+---
+
+structure
+    .componentFromUri({
+        uri: annotationUri,
+        format: 'cif',
+        category_name: 'components',
+        field_name: 'component',
+        block_header: '1h9t_annotations',
+        schema: 'chain',
+        field_values: ['Protein']
+    })
+    .representation({ type: 'cartoon' })
+    .colorFromUri({
+        uri: annotationUri,
+        format: 'cif',
+        category_name: 'annotations',
+        field_name: 'color',
+        block_header: '1h9t_annotations',
+        schema: 'residue_range'
+    });
+
+structure
+    .componentFromUri({
+        uri: annotationUri,
+        format: 'cif',
+        category_name: 'components',
+        schema: 'chain',
+        field_values: ['DNA']
+    })
+    .representation({ type: 'ball_and_stick' })
+    .colorFromUri({
+        uri: annotationUri,
+        format: 'cif',
+        category_name: 'annotations',
+        schema: 'residue_range'
+    });
+
+structure
+    .componentFromUri({
+        uri: annotationUri,
+        format: 'cif',
+        category_name: 'components',
+        schema: 'chain',
+        field_values: ['Gold', 'Chloride']
+    })
+    .representation({ type: 'surface' })
+    .colorFromUri({
+        uri: annotationUri,
+        format: 'cif',
+        category_name: 'annotations',
+        schema: 'residue_range'
+    });
+
+structure
+    .labelFromUri({
+        uri: annotationUri,
+        format: 'cif',
+        category_name: 'annotations',
+        field_name: 'label',
+        block_header: '1h9t_annotations',
+        schema: 'residue_range'
+    });
+
+structure
+    .tooltipFromUri({
+        uri: annotationUri,
+        format: 'cif',
+        category_name: 'annotations',
+        field_name: 'label',
+        block_header: '1h9t_annotations',
+        schema: 'residue_range'
+    });
+```
+
+## Primitives Example
+
+This example demonstrates geometric primitives without molecular structures. It includes ellipses, arrows, and an ellipsoid with different opacities.
+
+```{.molviewspec}
+builder.canvas({ background_color: '#000000' });
+
+const prims1 = builder.primitives({ opacity: 0.66 });
+
+---
+
+prims1.ellipse({
+    center: [1, 1, 1],
+    major_axis: [1.5, 0, 0],
+    minor_axis: [0, 2, 0],
+    theta_start: 0,
+    theta_end: Math.PI / 2,
+    color: 'red',
+    tooltip: 'XY'
+});
+
+prims1.ellipse({
+    center: [1, 1, 1],
+    major_axis_endpoint: [2.5, 1, 1],
+    minor_axis_endpoint: [1, 1, 2],
+    theta_start: 0,
+    theta_end: Math.PI / 2,
+    color: 'green',
+    tooltip: 'XZ'
+});
+
+prims1.ellipse({
+    center: [1, 1, 1],
+    major_axis: [0, 10, 0],
+    minor_axis: [0, 0, 1],
+    radius_major: 2,
+    radius_minor: 1,
+    theta_start: 0,
+    theta_end: Math.PI / 2,
+    color: 'blue',
+    tooltip: 'YZ'
+});
+
+prims1.arrow({
+    start: [1, 1, 1],
+    end: [2.5, 1, 1],
+    length: 1.7,
+    show_end_cap: true,
+    tube_radius: 0.05,
+    color: '#ffff00',
+    tooltip: 'X'
+});
+
+prims1.arrow({
+    start: [1, 1, 1],
+    direction: [0, 2.2, 0],
+    show_end_cap: true,
+    tube_radius: 0.05,
+    color: '#ff00ff',
+    tooltip: 'Y'
+});
+
+prims1.arrow({
+    start: [1, 1, 2.2],
+    end: [1, 1, 1],
+    show_start_cap: true,
+    tube_radius: 0.05,
+    color: '#00ffff',
+    tooltip: 'Z'
+});
+
+const prims2 = builder.primitives({ opacity: 0.33 });
+
+prims2.ellipsoid({
+    center: [1, 1, 1],
+    major_axis: [1, 0, 0],
+    minor_axis: [0, 1, 0],
+    radius: [1.5, 2, 1],
+    color: '#cccccc'
+});
+```
+
+## Volumes Example
+
+This example demonstrates electron density map visualization. It loads structure 1tqn along with 2FO-FC and FO-FC electron density maps from the PDBe Volume Server.
+
+```{.molviewspec}
+
+const structure = builder
+    .download({ url: 'https://files.wwpdb.org/download/1tqn.cif' })
+    .parse({ format: 'mmcif' })
+    .modelStructure();
+
+structure
+    .component({ selector: 'polymer' })
+    .representation({ type: 'cartoon' })
+    .color({ color: 'white' });
+
+const ligand = structure
+    .component({ selector: 'ligand' });
+
+ligand
+    .representation({ type: 'ball_and_stick' });
+    // .color({ color: 'element-symbol' });
+
+ligand.focus({
+        direction: [-28.47, -17.66, -16.32],
+        up: [0.98, -0.19, 0],
+        radius: 14,
+        radius_extent: 5
+    });
+
+const volumeData = builder
+    .download({
+        url: 'https://www.ebi.ac.uk/pdbe/densities/x-ray/1tqn/box/-22.367,-33.367,-21.634/-7.106,-10.042,-0.937?detail=3'
+    })
+    .parse({ format: 'bcif' })
+    .volume({ channel_id: '2FO-FC' })
+    .representation({
+        type: 'isosurface',
+        relative_isovalue: 1.5,
+        show_wireframe: true,
+        show_faces: false
+    })
+    .color({ color: 'blue' })
+    .opacity({ opacity: 0.3 });
+
+```

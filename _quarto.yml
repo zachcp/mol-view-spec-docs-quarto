@@ -33,6 +33,8 @@ website:
             href: docs/mvs-molstar-extension/load-extensions.qmd
       - text: "Demos"
         href: docs/demos.qmd
+      - text: "Examples"
+        href: docs/examples.qmd
 
 format:
   html:
