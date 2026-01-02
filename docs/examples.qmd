@@ -44,17 +44,23 @@ structure
     .representation({ type: 'ball_and_stick' })
     .color({ color: '#229954' });
 
-structure
-    .component({ selector: { label_asym_id: 'B', label_seq_id: 217 } })
-    .representation({ type: 'ball_and_stick' })
-    .color({ color: '#ff0000' });
-    //.label({ text: 'aaRS Class II Signature' });
+const sel1 = structure
+    .component({ selector: { label_asym_id: 'B', label_seq_id: 217 } });
 
-structure
-    .component({ selector: { label_asym_id: 'B', label_seq_id: 537 } })
+sel1
     .representation({ type: 'ball_and_stick' })
     .color({ color: '#ff0000' });
-    //.label({ text: 'aaRS Class II Signature' });
+
+sel1.label({ text: 'aaRS Class II Signature' });
+
+
+const sel2 = structure
+    .component({ selector: { label_asym_id: 'B', label_seq_id: 537 } });
+
+sel2.representation({ type: 'ball_and_stick' })
+    .color({ color: '#ff0000' });
+
+sel2.label({ text: 'aaRS Class II Signature' });
 
 structure
     .component({
