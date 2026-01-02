@@ -321,6 +321,7 @@ prims2.ellipsoid({
 This example demonstrates electron density map visualization. It loads structure 1tqn along with 2FO-FC and FO-FC electron density maps from the PDBe Volume Server.
 
 ```{.molviewspec}
+
 const structure = builder
     .download({ url: 'https://files.wwpdb.org/download/1tqn.cif' })
     .parse({ format: 'mmcif' })
@@ -332,9 +333,11 @@ structure
     .color({ color: 'white' });
 
 const ligand = structure
-    .component({ selector: 'ligand' })
-    .representation({ type: 'ball_and_stick' })
-    .color({ color: 'element-symbol' });
+    .component({ selector: 'ligand' });
+
+ligand
+    .representation({ type: 'ball_and_stick' });
+    // .color({ color: 'element-symbol' });
 
 ligand.focus({
         direction: [-28.47, -17.66, -16.32],
@@ -343,41 +346,19 @@ ligand.focus({
         radius_extent: 5
     });
 
-
 const volumeData = builder
     .download({
         url: 'https://www.ebi.ac.uk/pdbe/densities/x-ray/1tqn/box/-22.367,-33.367,-21.634/-7.106,-10.042,-0.937?detail=3'
     })
-    .parse({ format: 'bcif' });
-
-volumeData
+    .parse({ format: 'bcif' })
     .volume({ channel_id: '2FO-FC' })
-    .volumeRepresentation({
+    .representation({
         type: 'isosurface',
         relative_isovalue: 1.5,
         show_wireframe: true,
         show_faces: false
     })
     .color({ color: 'blue' })
-    .opacity({ opacity: 0.3 });
-
-const fofc = volumeData.volume({ channel_id: 'FO-FC' });
-
-
-fofc.volumeRepresentation({
-        type: 'isosurface',
-        relative_isovalue: 3,
-        show_wireframe: true
-    })
-    .color({ color: 'green' })
-    .opacity({ opacity: 0.3 });
-
-fofc.volumeRepresentation({
-        type: 'isosurface',
-        relative_isovalue: -3,
-        show_wireframe: true
-    })
-    .color({ color: 'red' })
     .opacity({ opacity: 0.3 });
 
 ```
