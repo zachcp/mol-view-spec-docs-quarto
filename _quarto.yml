@@ -1,0 +1,43 @@
+project:
+  type: website
+
+filters:
+  - molviewspec-quarto
+
+website:
+  title: "mol-view-spec"
+  sidebar:
+    style: "docked"
+    contents:
+      - text: "Tree Schema"
+        href: docs/tree-schema.qmd
+      - text: "Selectors"
+        href: docs/selectors.qmd
+      - text: "Annotations"
+        href: docs/annotations.qmd
+      - text: "Camera Settings"
+        href: docs/camera-settings.qmd
+      - text: "Primitives"
+        href: docs/primitives.qmd
+      - text: "Volumetric Data"
+        href: docs/volumes.qmd
+      - text: "Animations"
+        href: docs/animations.qmd
+      - section: "Mol* MVS Extension"
+        contents:
+          - text: "Overview"
+            href: docs/mvs-molstar-extension/index.qmd
+          - text: "Integration Examples"
+            href: docs/mvs-molstar-extension/integration.qmd
+          - text: "Custom Load Extensions"
+            href: docs/mvs-molstar-extension/load-extensions.qmd
+      - text: "Demos"
+        href: docs/demos.qmd
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
