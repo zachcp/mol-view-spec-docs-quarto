@@ -1,0 +1,1146 @@
+---
+title: "Examples"
+---
+
+This page demonstrates various MolViewSpec examples showcasing different visualization capabilities.
+
+## Basic Example
+
+A simple molecular structure visualization. This example loads the 1cbs structure from the PDB and displays it as a blue cartoon representation.
+
+```{.molviewspec}
+{
+    "root": {
+        "kind": "root",
+        "children": [
+            {
+                "kind": "download",
+                "params": {
+                    "url": "https://files.wwpdb.org/download/1cbs.cif"
+                },
+                "children": [
+                    {
+                        "kind": "parse",
+                        "params": {
+                            "format": "mmcif"
+                        },
+                        "children": [
+                            {
+                                "kind": "structure",
+                                "params": {
+                                    "type": "model"
+                                },
+                                "children": [
+                                    {
+                                        "kind": "component",
+                                        "params": {
+                                            "selector": "all"
+                                        },
+                                        "children": [
+                                            {
+                                                "kind": "representation",
+                                                "params": {
+                                                    "type": "cartoon"
+                                                },
+                                                "children": [
+                                                    {
+                                                        "kind": "color",
+                                                        "params": {
+                                                            "selector": "all",
+                                                            "color": "blue"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "metadata": {
+        "version": "0.1",
+        "timestamp": "2023-11-27T12:05:32.145284"
+    }
+}
+```
+
+## Components Example
+
+This example demonstrates multiple component selection with different representations. It shows an aminoacyl-tRNA synthetase (1c0a) with protein (orange), nucleic acid (blue), and specific residues highlighted in different colors. The example also demonstrates labels and focus functionality.
+
+```{.molviewspec}
+{
+    "root": {
+        "kind": "root",
+        "children": [
+            {
+                "kind": "download",
+                "params": {
+                    "url": "https://files.wwpdb.org/download/1c0a.cif"
+                },
+                "children": [
+                    {
+                        "kind": "parse",
+                        "params": {
+                            "format": "mmcif"
+                        },
+                        "children": [
+                            {
+                                "kind": "structure",
+                                "params": {
+                                    "type": "assembly"
+                                },
+                                "children": [
+                                    {
+                                        "kind": "component",
+                                        "params": {
+                                            "selector": "protein"
+                                        },
+                                        "children": [
+                                            {
+                                                "kind": "representation",
+                                                "params": {
+                                                    "type": "cartoon"
+                                                },
+                                                "children": [
+                                                    {
+                                                        "kind": "color",
+                                                        "params": {
+                                                            "selector": "all",
+                                                            "color": "#e19039"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "kind": "component",
+                                        "params": {
+                                            "selector": "nucleic"
+                                        },
+                                        "children": [
+                                            {
+                                                "kind": "representation",
+                                                "params": {
+                                                    "type": "cartoon"
+                                                },
+                                                "children": [
+                                                    {
+                                                        "kind": "color",
+                                                        "params": {
+                                                            "selector": "all",
+                                                            "color": "#4b7fcc"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "kind": "component",
+                                        "params": {
+                                            "selector": {
+                                                "label_asym_id": "E"
+                                            }
+                                        },
+                                        "children": [
+                                            {
+                                                "kind": "representation",
+                                                "params": {
+                                                    "type": "ball_and_stick"
+                                                },
+                                                "children": [
+                                                    {
+                                                        "kind": "color",
+                                                        "params": {
+                                                            "selector": "all",
+                                                            "color": "#229954"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "kind": "component",
+                                        "params": {
+                                            "selector": {
+                                                "label_asym_id": "B",
+                                                "label_seq_id": 217
+                                            }
+                                        },
+                                        "children": [
+                                            {
+                                                "kind": "representation",
+                                                "params": {
+                                                    "type": "ball_and_stick"
+                                                },
+                                                "children": [
+                                                    {
+                                                        "kind": "color",
+                                                        "params": {
+                                                            "selector": "all",
+                                                            "color": "#ff0000"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "kind": "label",
+                                                "params": {
+                                                    "text": "aaRS Class II Signature"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "kind": "component",
+                                        "params": {
+                                            "selector": {
+                                                "label_asym_id": "B",
+                                                "label_seq_id": 537
+                                            }
+                                        },
+                                        "children": [
+                                            {
+                                                "kind": "representation",
+                                                "params": {
+                                                    "type": "ball_and_stick"
+                                                },
+                                                "children": [
+                                                    {
+                                                        "kind": "color",
+                                                        "params": {
+                                                            "selector": "all",
+                                                            "color": "#ff0000"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "kind": "label",
+                                                "params": {
+                                                    "text": "aaRS Class II Signature"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "kind": "component",
+                                        "params": {
+                                            "selector": [
+                                                {
+                                                    "label_asym_id": "E"
+                                                },
+                                                {
+                                                    "label_asym_id": "B",
+                                                    "label_seq_id": 217
+                                                },
+                                                {
+                                                    "label_asym_id": "B",
+                                                    "label_seq_id": 537
+                                                }
+                                            ]
+                                        },
+                                        "children": [
+                                            {
+                                                "kind": "focus",
+                                                "params": {}
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "metadata": {
+        "version": "0.1",
+        "timestamp": "2023-11-28T22:39:04.030365+00:00"
+    }
+}
+```
+
+## Label Example
+
+This example demonstrates custom labeling on specific residues. It highlights residue ALA 120 A in red with a custom label and focuses the camera on it.
+
+```{.molviewspec}
+{
+    "root": {
+        "kind": "root",
+        "children": [
+            {
+                "kind": "download",
+                "params": {
+                    "url": "https://files.wwpdb.org/download/1lap.cif"
+                },
+                "children": [
+                    {
+                        "kind": "parse",
+                        "params": {
+                            "format": "mmcif"
+                        },
+                        "children": [
+                            {
+                                "kind": "structure",
+                                "params": {
+                                    "type": "model"
+                                },
+                                "children": [
+                                    {
+                                        "kind": "component",
+                                        "params": {
+                                            "selector": "all"
+                                        },
+                                        "children": [
+                                            {
+                                                "kind": "representation",
+                                                "params": {
+                                                    "type": "cartoon"
+                                                },
+                                                "children": [
+                                                    {
+                                                        "kind": "color",
+                                                        "params": {
+                                                            "selector": {
+                                                                "label_asym_id": "A",
+                                                                "label_seq_id": 120
+                                                            },
+                                                            "color": "red"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "kind": "component",
+                                        "params": {
+                                            "selector": {
+                                                "label_asym_id": "A",
+                                                "label_seq_id": 120
+                                            }
+                                        },
+                                        "children": [
+                                            {
+                                                "kind": "label",
+                                                "params": {
+                                                    "text": "ALA 120 A: My Label"
+                                                }
+                                            },
+                                            {
+                                                "kind": "focus",
+                                                "params": {}
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "metadata": {
+        "version": "0.1",
+        "timestamp": "2023-11-27T12:33:50.321118"
+    }
+}
+```
+
+## Superposition Example
+
+This example demonstrates structural superposition by loading two hemoglobin structures (4hhb in red and 1oj6 in blue) and applying a transformation matrix to align them.
+
+```{.molviewspec}
+{
+    "root": {
+        "kind": "root",
+        "children": [
+            {
+                "kind": "download",
+                "params": {
+                    "url": "https://files.wwpdb.org/download/4hhb.cif"
+                },
+                "children": [
+                    {
+                        "kind": "parse",
+                        "params": {
+                            "format": "mmcif"
+                        },
+                        "children": [
+                            {
+                                "kind": "structure",
+                                "params": {
+                                    "type": "model"
+                                },
+                                "children": [
+                                    {
+                                        "kind": "component",
+                                        "params": {
+                                            "selector": "all"
+                                        },
+                                        "children": [
+                                            {
+                                                "kind": "representation",
+                                                "params": {
+                                                    "type": "cartoon"
+                                                },
+                                                "children": [
+                                                    {
+                                                        "kind": "color",
+                                                        "params": {
+                                                            "selector": "all",
+                                                            "color": "red"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "kind": "download",
+                "params": {
+                    "url": "https://files.wwpdb.org/download/1oj6.cif"
+                },
+                "children": [
+                    {
+                        "kind": "parse",
+                        "params": {
+                            "format": "mmcif"
+                        },
+                        "children": [
+                            {
+                                "kind": "structure",
+                                "params": {
+                                    "type": "model"
+                                },
+                                "children": [
+                                    {
+                                        "kind": "transform",
+                                        "params": {
+                                            "rotation": [
+                                                -0.7202161,
+                                                -0.33009904,
+                                                -0.61018308,
+                                                0.36257631,
+                                                0.57075962,
+                                                -0.73673053,
+                                                0.59146191,
+                                                -0.75184312,
+                                                -0.29138417
+                                            ],
+                                            "translation": [
+                                                -12.54,
+                                                46.79,
+                                                94.5
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "kind": "component",
+                                        "params": {
+                                            "selector": "all"
+                                        },
+                                        "children": [
+                                            {
+                                                "kind": "representation",
+                                                "params": {
+                                                    "type": "cartoon"
+                                                },
+                                                "children": [
+                                                    {
+                                                        "kind": "color",
+                                                        "params": {
+                                                            "selector": "all",
+                                                            "color": "blue"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "metadata": {
+        "version": "0.1",
+        "timestamp": "2023-11-27T12:42:34.671240"
+    }
+}
+```
+
+## Symmetry Example
+
+This example demonstrates crystal symmetry visualization by creating a 3x3x3 unit cell grid of structure 1tqn.
+
+```{.molviewspec}
+{
+    "root": {
+        "kind": "root",
+        "children": [
+            {
+                "kind": "download",
+                "params": {
+                    "url": "https://files.wwpdb.org/download/1tqn.cif"
+                },
+                "children": [
+                    {
+                        "kind": "parse",
+                        "params": {
+                            "format": "mmcif"
+                        },
+                        "children": [
+                            {
+                                "kind": "structure",
+                                "params": {
+                                    "type": "symmetry",
+                                    "ijk_min": [
+                                        -1,
+                                        -1,
+                                        -1
+                                    ],
+                                    "ijk_max": [
+                                        1,
+                                        1,
+                                        1
+                                    ]
+                                },
+                                "children": [
+                                    {
+                                        "kind": "component",
+                                        "params": {
+                                            "selector": "all"
+                                        },
+                                        "children": [
+                                            {
+                                                "kind": "representation",
+                                                "params": {
+                                                    "type": "cartoon"
+                                                },
+                                                "children": [
+                                                    {
+                                                        "kind": "color",
+                                                        "params": {
+                                                            "selector": "all",
+                                                            "color": "#008080"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "metadata": {
+        "version": "0.1",
+        "timestamp": "2023-11-27T13:19:14.948532"
+    }
+}
+```
+
+## Annotations Example
+
+This example demonstrates using external annotation files to define components, colors, labels, and tooltips. It loads structure 1h9t (protein-DNA complex) and applies annotations from a CIF file.
+
+```{.molviewspec}
+{
+  "root": {
+    "kind": "root",
+    "children": [
+      {
+        "kind": "download",
+        "params": {
+          "url": "https://files.wwpdb.org/download/1h9t.cif"
+        },
+        "children": [
+          {
+            "kind": "parse",
+            "params": {
+              "format": "mmcif"
+            },
+            "children": [
+              {
+                "kind": "structure",
+                "params": {
+                  "type": "model"
+                },
+                "children": [
+                  {
+                    "kind": "component_from_uri",
+                    "params": {
+                      "uri": "https://molstar.org/mol-view-spec/examples/annotations/annotations-1h9t.cif",
+                      "format": "cif",
+                      "category_name": "components",
+                      "field_name": "component",
+                      "block_header": "1h9t_annotations",
+                      "schema": "chain",
+                      "field_values": [
+                        "Protein"
+                      ]
+                    },
+                    "children": [
+                      {
+                        "kind": "representation",
+                        "params": {
+                          "type": "cartoon"
+                        },
+                        "children": [
+                          {
+                            "kind": "color_from_uri",
+                            "params": {
+                              "uri": "https://molstar.org/mol-view-spec/examples/annotations/annotations-1h9t.cif",
+                              "format": "cif",
+                              "category_name": "annotations",
+                              "field_name": "color",
+                              "block_header": "1h9t_annotations",
+                              "schema": "residue_range"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "component_from_uri",
+                    "params": {
+                      "uri": "https://molstar.org/mol-view-spec/examples/annotations/annotations-1h9t.cif",
+                      "format": "cif",
+                      "category_name": "components",
+                      "schema": "chain",
+                      "field_values": [
+                        "DNA"
+                      ]
+                    },
+                    "children": [
+                      {
+                        "kind": "representation",
+                        "params": {
+                          "type": "ball_and_stick"
+                        },
+                        "children": [
+                          {
+                            "kind": "color_from_uri",
+                            "params": {
+                              "uri": "https://molstar.org/mol-view-spec/examples/annotations/annotations-1h9t.cif",
+                              "format": "cif",
+                              "category_name": "annotations",
+                              "schema": "residue_range"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "component_from_uri",
+                    "params": {
+                      "uri": "https://molstar.org/mol-view-spec/examples/annotations/annotations-1h9t.cif",
+                      "format": "cif",
+                      "category_name": "components",
+                      "schema": "chain",
+                      "field_values": [
+                        "Gold",
+                        "Chloride"
+                      ]
+                    },
+                    "children": [
+                      {
+                        "kind": "representation",
+                        "params": {
+                          "type": "surface"
+                        },
+                        "children": [
+                          {
+                            "kind": "color_from_uri",
+                            "params": {
+                              "uri": "https://molstar.org/mol-view-spec/examples/annotations/annotations-1h9t.cif",
+                              "format": "cif",
+                              "category_name": "annotations",
+                              "schema": "residue_range"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "label_from_uri",
+                    "params": {
+                      "uri": "https://molstar.org/mol-view-spec/examples/annotations/annotations-1h9t.cif",
+                      "format": "cif",
+                      "category_name": "annotations",
+                      "field_name": "label",
+                      "block_header": "1h9t_annotations",
+                      "schema": "residue_range"
+                    }
+                  },
+                  {
+                    "kind": "tooltip_from_uri",
+                    "params": {
+                      "uri": "https://molstar.org/mol-view-spec/examples/annotations/annotations-1h9t.cif",
+                      "format": "cif",
+                      "category_name": "annotations",
+                      "field_name": "label",
+                      "block_header": "1h9t_annotations",
+                      "schema": "residue_range"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metadata": {
+    "version": "0.1",
+    "title": "An example with MVS annotations",
+    "timestamp": "2024-03-05T18:40:24.870561+00:00"
+  }
+}
+```
+
+## Primitives Example
+
+This example demonstrates geometric primitives without molecular structures. It includes ellipses, arrows, and an ellipsoid with different opacities.
+
+```{.molviewspec}
+{
+  "kind": "single",
+  "root": {
+    "kind": "root",
+    "children": [
+      {
+        "kind": "primitives",
+        "params": {
+          "opacity": 0.66
+        },
+        "children": [
+          {
+            "kind": "primitive",
+            "params": {
+              "kind": "ellipse",
+              "center": [
+                1,
+                1,
+                1
+              ],
+              "major_axis": [
+                1.5,
+                0,
+                0
+              ],
+              "minor_axis": [
+                0,
+                2,
+                0
+              ],
+              "theta_start": 0,
+              "theta_end": 1.5707963267948966,
+              "color": "red",
+              "tooltip": "XY"
+            }
+          },
+          {
+            "kind": "primitive",
+            "params": {
+              "kind": "ellipse",
+              "center": [
+                1,
+                1,
+                1
+              ],
+              "major_axis_endpoint": [
+                2.5,
+                1,
+                1
+              ],
+              "minor_axis_endpoint": [
+                1,
+                1,
+                2
+              ],
+              "theta_start": 0,
+              "theta_end": 1.5707963267948966,
+              "color": "green",
+              "tooltip": "XZ"
+            }
+          },
+          {
+            "kind": "primitive",
+            "params": {
+              "kind": "ellipse",
+              "center": [
+                1,
+                1,
+                1
+              ],
+              "major_axis": [
+                0,
+                10,
+                0
+              ],
+              "minor_axis": [
+                0,
+                0,
+                1
+              ],
+              "radius_major": 2,
+              "radius_minor": 1,
+              "theta_start": 0,
+              "theta_end": 1.5707963267948966,
+              "color": "blue",
+              "tooltip": "YZ"
+            }
+          },
+          {
+            "kind": "primitive",
+            "params": {
+              "kind": "arrow",
+              "start": [
+                1,
+                1,
+                1
+              ],
+              "end": [
+                2.5,
+                1,
+                1
+              ],
+              "length": 1.7,
+              "show_end_cap": true,
+              "tube_radius": 0.05,
+              "color": "#ffff00",
+              "tooltip": "X"
+            }
+          },
+          {
+            "kind": "primitive",
+            "params": {
+              "kind": "arrow",
+              "start": [
+                1,
+                1,
+                1
+              ],
+              "direction": [
+                0,
+                2.2,
+                0
+              ],
+              "show_end_cap": true,
+              "tube_radius": 0.05,
+              "color": "#ff00ff",
+              "tooltip": "Y"
+            }
+          },
+          {
+            "kind": "primitive",
+            "params": {
+              "kind": "arrow",
+              "start": [
+                1,
+                1,
+                2.2
+              ],
+              "end": [
+                1,
+                1,
+                1
+              ],
+              "show_start_cap": true,
+              "tube_radius": 0.05,
+              "color": "#00ffff",
+              "tooltip": "Z"
+            }
+          }
+        ]
+      },
+      {
+        "kind": "primitives",
+        "params": {
+          "opacity": 0.33
+        },
+        "children": [
+          {
+            "kind": "primitive",
+            "params": {
+              "kind": "ellipsoid",
+              "center": [
+                1,
+                1,
+                1
+              ],
+              "major_axis": [
+                1,
+                0,
+                0
+              ],
+              "minor_axis": [
+                0,
+                1,
+                0
+              ],
+              "radius": [
+                1.5,
+                2,
+                1
+              ],
+              "color": "#cccccc"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metadata": {
+    "timestamp": "2025-02-21T13:39:44.086729+00:00",
+    "version": "1.1"
+  }
+}
+```
+
+## Volumes Example
+
+This example demonstrates electron density map visualization. It loads structure 1tqn along with 2FO-FC and FO-FC electron density maps from the PDBe Volume Server.
+
+```{.molviewspec}
+{
+  "kind": "multiple",
+  "metadata": {
+    "description": "1tqn + Volume Server",
+    "timestamp": "2025-02-20T08:42:33.708173+00:00",
+    "version": "1.1"
+  },
+  "snapshots": [
+    {
+      "root": {
+        "kind": "root",
+        "children": [
+          {
+            "kind": "download",
+            "params": {
+              "url": "https://files.wwpdb.org/download/1tqn.cif"
+            },
+            "children": [
+              {
+                "kind": "parse",
+                "params": {
+                  "format": "mmcif"
+                },
+                "children": [
+                  {
+                    "kind": "structure",
+                    "params": {
+                      "type": "model"
+                    },
+                    "children": [
+                      {
+                        "kind": "component",
+                        "params": {
+                          "selector": "polymer"
+                        },
+                        "children": [
+                          {
+                            "kind": "representation",
+                            "params": {
+                              "type": "cartoon"
+                            },
+                            "children": [
+                              {
+                                "kind": "color",
+                                "params": {
+                                  "color": "white"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "component",
+                        "params": {
+                          "selector": "ligand"
+                        },
+                        "children": [
+                          {
+                            "kind": "representation",
+                            "params": {
+                              "type": "ball_and_stick"
+                            },
+                            "children": [
+                              {
+                                "kind": "color",
+                                "params": {},
+                                "custom": {
+                                  "molstar_color_theme_name": "element-symbol"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "focus",
+                            "params": {
+                              "direction": [
+                                -28.47,
+                                -17.66,
+                                -16.32
+                              ],
+                              "up": [
+                                0.98,
+                                -0.19,
+                                0
+                              ],
+                              "radius": 14,
+                              "radius_extent": 5
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "download",
+            "params": {
+              "url": "https://www.ebi.ac.uk/pdbe/densities/x-ray/1tqn/box/-22.367,-33.367,-21.634/-7.106,-10.042,-0.937?detail=3"
+            },
+            "children": [
+              {
+                "kind": "parse",
+                "params": {
+                  "format": "bcif"
+                },
+                "children": [
+                  {
+                    "kind": "volume",
+                    "params": {
+                      "channel_id": "2FO-FC"
+                    },
+                    "children": [
+                      {
+                        "kind": "volume_representation",
+                        "params": {
+                          "type": "isosurface",
+                          "relative_isovalue": 1.5,
+                          "show_wireframe": true,
+                          "show_faces": false
+                        },
+                        "children": [
+                          {
+                            "kind": "color",
+                            "params": {
+                              "color": "blue"
+                            }
+                          },
+                          {
+                            "kind": "opacity",
+                            "params": {
+                              "opacity": 0.3
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "volume",
+                    "params": {
+                      "channel_id": "FO-FC"
+                    },
+                    "children": [
+                      {
+                        "kind": "volume_representation",
+                        "params": {
+                          "type": "isosurface",
+                          "relative_isovalue": 3,
+                          "show_wireframe": true
+                        },
+                        "children": [
+                          {
+                            "kind": "color",
+                            "params": {
+                              "color": "green"
+                            }
+                          },
+                          {
+                            "kind": "opacity",
+                            "params": {
+                              "opacity": 0.3
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "volume_representation",
+                        "params": {
+                          "type": "isosurface",
+                          "relative_isovalue": -3,
+                          "show_wireframe": true
+                        },
+                        "children": [
+                          {
+                            "kind": "color",
+                            "params": {
+                              "color": "red"
+                            }
+                          },
+                          {
+                            "kind": "opacity",
+                            "params": {
+                              "opacity": 0.3
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "title": "1tqn",
+        "description": "\n### 1tqn with ligand and electron density map\n- 2FO-FC at 1.5σ, blue\n- FO-FC (positive) at 3σ, green\n- FO-FC (negative) at -3σ, red\n",
+        "key": "6e6545f0-9bce-4f9b-965c-5f7e5cecaa7b",
+        "linger_duration_ms": 1000
+      }
+    }
+  ]
+}
+```
